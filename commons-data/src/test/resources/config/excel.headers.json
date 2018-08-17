@@ -1,0 +1,8 @@
+{
+  "Account":[
+    {"text":"用户名","field":"name","width":3000},
+    {"text":"最近登录IP","field":"loginIp","width":7000},
+    {"text":"最近登录时间","field":"loginDate","width":6000},
+    {"text":"录入时间","field":"addDate","width":6000}
+  ]
+}

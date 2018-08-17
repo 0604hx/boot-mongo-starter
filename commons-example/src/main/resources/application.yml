@@ -1,0 +1,42 @@
+spring:
+  data:
+      mongodb:
+        database: test
+        host: localhost
+        port: 27017
+  #----------------------START Freemarker----------------------------
+  freemarker:
+    enabled: true
+    charset: utf-8
+    content-type: text/html; charset=UTF-8
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    request-context-attribute: request
+    suffix: .html
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      boolean_format: true,false
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      number_format: 0.##
+      whitespace_stripping: true
+      classic_compatible: false
+      auto_import: #macro/spring.ftl as spring, macro/layout.ftl as ui
+    cache: false
+  #----------------------END Freemarker----------------------------
+
+nerve:
+  security:
+    remember-me: false
+    captcha:
+      enable: true
+    popular: /date
+  fastJson: true
+  jwt:
+    name: ${spring.application.name}
+#    skip-path:  /account/**,/login.js
+
+logging:
+  level:
+    org.nerve: DEBUG

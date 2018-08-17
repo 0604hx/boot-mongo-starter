@@ -1,0 +1,13 @@
+spring:
+  cache:
+    caffeine:
+      spec: maximumSize=2000,expireAfterWrite=5s
+
+zeus:
+  cache:
+    enable: true
+    caches:
+      - name: dashboard
+        spec: maximumSize=100,expireAfterWrite=10s
+      - name: controller
+        spec: maximumSize=100,expireAfterAccess=2s

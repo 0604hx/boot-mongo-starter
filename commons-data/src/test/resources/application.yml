@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      database: test
+      host: localhost
+      port: 27017
+
+logging:
+  level:
+    com.zeus: DEBUG
+
+zeus:
+  log:
+    interval: 5000
