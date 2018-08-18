@@ -31,7 +31,7 @@ public class CaptchaConfig {
 	/*
 	图片默认宽度
 	 */
-	int width = 60;
+	int width = 15 * length;
 	/*
 	图片默认高度
 	 */
@@ -39,7 +39,7 @@ public class CaptchaConfig {
 	/*
 	请求中的参数名称
 	 */
-	String parameter = "verification";
+	String parameter = "captcha";
 
 	String msgBad = "验证码不正确";
 	String msgExpire = "验证码已过期";

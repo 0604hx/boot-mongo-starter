@@ -22,13 +22,14 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e)
-			throws IOException, ServletException {
+			throws IOException {
 		logger.info("LOGIN FAIL:"+e.getMessage());
 
-		Result result = new Result();
-		result.setSuccess(false).setMessage(Exceptions.LOGIN_FAIL);
-
-		httpServletResponse.setCharacterEncoding("utf-8");
-		httpServletResponse.getWriter().print(JSON.toJSONString(result));
+//		Result result = new Result();
+//		result.setSuccess(false).setMessage(Exceptions.LOGIN_FAIL);
+//
+		//解决中文乱码问题
+		httpServletResponse.setContentType("application/json;charset=UTF-8");
+		httpServletResponse.getWriter().print(JSON.toJSONString(Result.fail(e)));
 	}
 }

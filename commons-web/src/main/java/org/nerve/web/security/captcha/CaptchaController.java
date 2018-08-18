@@ -25,7 +25,7 @@ import static org.springframework.web.bind.ServletRequestUtils.getIntParameter;
  * Created by 	zengxm on 2018/5/10.
  */
 @RestController
-@ConditionalOnProperty(name ="zeus.security.verification.enable", havingValue = "true")
+@ConditionalOnProperty(name ="nerve.security.captcha.enable", havingValue = "true")
 public class CaptchaController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -36,7 +36,7 @@ public class CaptchaController {
 	@Autowired
 	ImageCreator imageCreator;
 
-	@RequestMapping("verification-code")
+	@RequestMapping("captcha-code")
 	public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CaptchaConfig c = config.getCaptcha();
 
