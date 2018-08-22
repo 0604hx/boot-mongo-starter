@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
  * Created by 	zengxm on 2018/1/13.
  */
 public interface ID {
+	String EMPTY = "";
+
 	String id();
 
 	default boolean using(){

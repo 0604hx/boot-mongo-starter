@@ -28,7 +28,7 @@ import javax.annotation.PostConstruct;
  *
  */
 @Configuration
-@ConditionalOnProperty(name ="zeus.cache.enable", matchIfMissing = true, havingValue = "true")
+@ConditionalOnProperty(name ="nerve.cache.enable", matchIfMissing = true, havingValue = "true")
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration extends CachingConfigurerSupport {
 
@@ -43,7 +43,7 @@ public class CacheConfiguration extends CachingConfigurerSupport {
 
 	@PostConstruct
 	protected void init(){
-		logger.info("[Cache] 初始化 CacheConfiguration ( set zeus.cache.enable=false if you want to disable zeus cache!)");
+		logger.info("[Cache] 初始化 CacheConfiguration ( set nerve.cache.enable=false if you want to disable zeus cache!)");
 		logger.info("[Cache] {}", cacheConfig.caches);
 	}
 

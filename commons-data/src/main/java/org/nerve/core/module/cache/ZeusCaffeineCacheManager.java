@@ -24,7 +24,7 @@ public class ZeusCaffeineCacheManager extends CaffeineCacheManager {
 
 	public void setCaches(Collection<? extends Cache> caches) {
 		if(caches!=null)
-			caches.forEach(cache->addCache(cache));
+			caches.forEach(this::addCache);
 	}
 
 	public void addCache(Cache cache){
@@ -50,8 +50,8 @@ public class ZeusCaffeineCacheManager extends CaffeineCacheManager {
 	@Override
 	public Collection<String> getCacheNames() {
 		Set<String> names = new HashSet<>();
-		this.initCacheMap.keySet().forEach(n->names.add(n));
-		super.getCacheNames().forEach(n->names.add(n));
+		names.addAll(this.initCacheMap.keySet());
+		names.addAll(super.getCacheNames());
 		return Collections.unmodifiableSet(names);
 	}
 }

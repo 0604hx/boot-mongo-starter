@@ -15,7 +15,7 @@ import java.util.List;
  * 只针对 Caffeine，详细的 cache 配置请见：http://static.javadoc.io/com.github.ben-manes.caffeine/caffeine/2.2.2/com/github/benmanes/caffeine/cache/CaffeineSpec.html
  */
 @Configuration
-@ConfigurationProperties(prefix = "zeus.cache")
+@ConfigurationProperties(prefix = "nerve.cache")
 public class CacheConfig {
 	boolean enable=false;
 	List<CacheBean> caches = new ArrayList<>();
