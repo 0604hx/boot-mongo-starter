@@ -24,6 +24,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import static org.nerve.web.security.AuthConfig.*;
+
 /**
  * com.zeus.web.security
  * Created by zengxm on 2017/8/23.
@@ -50,21 +52,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(authConfig.statics.split(AuthConfig.SPLIT)).permitAll();
+                .antMatchers(String.format("%s%s%s", authConfig.statics, SPLIT, authConfig.popular).split(SPLIT)).permitAll();
 
-        logger.debug("[AUTH] set permitAll for {}", authConfig.statics);
-
-        if(StringUtils.isNotBlank(authConfig.popular)){
-            http.authorizeRequests()
-                    .antMatchers(authConfig.popular.split(AuthConfig.SPLIT)).permitAll();
-            logger.debug("[AUTH] set permitAll for popular: {}", authConfig.popular);
-        }
+        logger.debug("[AUTH] set permitAll for {},{}", authConfig.statics, authConfig.popular);
 
         if(authConfig.map != null){
             authConfig.map.forEach((k,v)->{
                 try {
                     http.authorizeRequests()
-                            .antMatchers(k).hasAnyAuthority(StringUtils.split(v, AuthConfig.SPLIT));
+                            .antMatchers(k).hasAnyAuthority(StringUtils.split(v, SPLIT));
                     logger.debug("[AUTH] register ：{} for anyAuthority: {} ",k,v);
                 } catch (Exception e) {
                     logger.error("[AUTH] error on register anyAuthority:{}={}",k,v);
@@ -110,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         logger.debug("[AUTH] loginPage={}, loginProcessingUrl={}", authConfig.loginPage, authConfig.loginPostPage);
 
         if(authConfig.captcha.isEnable()){
-            logger.debug("[AUTH] config captcha code....");
+            logger.debug("[AUTH] config captcha code for login check....");
 
             CaptchaFilter captchaFilter = new CaptchaFilter(authConfig);
             http.addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);

@@ -16,7 +16,7 @@ import java.util.Random;
  * Created by 	zengxm on 2018/5/10.
  */
 @Configuration
-@ConditionalOnProperty(name ="zeus.security.verification.enable", havingValue = "true")
+@ConditionalOnProperty(name ="nerve.security.captcha.enable", havingValue = "true")
 public class CaptchaConfiguration {
 
 	/**

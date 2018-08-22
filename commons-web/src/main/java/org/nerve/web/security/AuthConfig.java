@@ -24,7 +24,7 @@ public class AuthConfig {
 	/**
 	 * 静态资源列表
 	 */
-	String statics = "/,/index.html,/error,/static/**,/public/**,/token,/app.html,/mobile.html,/captcha-code";
+	String statics = "/,/index.html,/error,/static/**,/public/**,/token,/app.html,/mobile.html,/captcha-code,/favicon.ico";
 
 	/**
 	 * 额外的大众授权的路径
