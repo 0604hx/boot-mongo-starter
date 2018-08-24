@@ -15,11 +15,15 @@ public interface SettingService extends CommonService<Setting, SettingRepo> {
 
 	Setting load(String uuid);
 
+	Setting load(Enum e);
+
 	String value(String uuid);
 
-	int intValue(String uuid);
+	String value(Enum e);
 
-	float floatValue(String uuid);
+	int intValue(Enum uuid, int defaultValue);
 
-	boolean booleanValue(String uuid);
+	float floatValue(Enum uuid, float defaultValue);
+
+	boolean booleanValue(Enum uuid, boolean defaultValue);
 }

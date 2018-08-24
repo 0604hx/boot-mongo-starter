@@ -25,6 +25,10 @@ public class Setting extends UpdateDateEntity {
 
 	public Setting(){}
 
+	public Setting(Enum<?> e){
+		this(e.name());
+	}
+
 	public Setting(String uuid){
 		if(Objects.isNull(uuid))
 			throw new RuntimeException("UUID must not be null!");

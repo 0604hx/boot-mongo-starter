@@ -63,7 +63,7 @@ public class DefaultExcelHeaderProvider implements ExcelHeaderProvider{
 				logger.debug("loaded headers for {}, size={}", k, headers.size());
 			});
 		} catch (Exception e) {
-			logger.error("error on init Excel Header:", e);
+			logger.error("error on init Excel Header:{}", e.getMessage());
 		}
 	}
 }

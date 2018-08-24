@@ -5,6 +5,7 @@ import org.nerve.core.repo.SettingRepo;
 import org.nerve.core.service.SettingService;
 import org.nerve.enums.Fields;
 import org.nerve.service.CommonServiceImpl;
+import org.nerve.utils.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class SettingServiceImpl extends CommonServiceImpl<Setting, SettingRepo> 
 		return repo.findOne(Criteria.where(Fields.UUID.value()).is(uuid));
 	}
 
+	@Override
+	public Setting load(Enum e) {
+		return load(e.name());
+	}
+
 	@Cacheable("settings")
 	@Override
 	public String value(String uuid) {
@@ -34,19 +40,28 @@ public class SettingServiceImpl extends CommonServiceImpl<Setting, SettingRepo> 
 
 	@Cacheable("settings")
 	@Override
-	public int intValue(String uuid) {
-		return 0;
+	public String value(Enum e) {
+		return value(e.name());
 	}
 
 	@Cacheable("settings")
 	@Override
-	public float floatValue(String uuid) {
-		return 0;
+	public int intValue(Enum uuid, int defaultValue) {
+		String value = value(uuid);
+		return StringUtils.isEmpty(value)? defaultValue : Integer.valueOf(value);
 	}
 
 	@Cacheable("settings")
 	@Override
-	public boolean booleanValue(String uuid) {
-		return false;
+	public float floatValue(Enum uuid, float defaultValue) {
+		String value = value(uuid);
+		return StringUtils.isEmpty(value)? defaultValue : Float.valueOf(value);
+	}
+
+	@Cacheable("settings")
+	@Override
+	public boolean booleanValue(Enum uuid, boolean defaultValue) {
+		String value = value(uuid);
+		return StringUtils.isEmpty(value)? defaultValue : Boolean.valueOf(value);
 	}
 }
