@@ -148,8 +148,8 @@ public class CommonRepoImpl<T,ID extends java.io.Serializable> extends SimpleMon
     }
 
     @Override
-    public List<?> aggregate(Aggregation aggregation, Class<?> clazz) {
-        AggregationResults<?> results = mongoTemplate.aggregate(aggregation, entityInformation.getJavaType(), clazz);
+    public <R> List<R> aggregate(Aggregation aggregation,Class<R> clazz) {
+        AggregationResults<R> results = mongoTemplate.aggregate(aggregation, entityInformation.getJavaType(), clazz);
         return results.getMappedResults();
     }
 

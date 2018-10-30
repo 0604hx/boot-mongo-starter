@@ -90,7 +90,7 @@ public interface CommonRepo<T,ID extends java.io.Serializable> extends MongoRepo
      * 聚合操作
      * @param aggregation
      */
-    List<?> aggregate(Aggregation aggregation,Class<?> clazz);
+    <R> List<R> aggregate(Aggregation aggregation,Class<R> clazz);
 
     /**
      * 获取表名
