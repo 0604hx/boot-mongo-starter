@@ -16,8 +16,7 @@ public class DefaultIpDetector implements IpDetector {
 
 	@Override
 	public String getIp() {
-		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-		HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+		HttpServletRequest request = request();
 
 		String ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -32,5 +31,15 @@ public class DefaultIpDetector implements IpDetector {
 				ip = "127.0.0.1";
 		}
 		return ip;
+	}
+
+	protected HttpServletRequest request(){
+		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+		return ((ServletRequestAttributes)requestAttributes).getRequest();
+	}
+
+	@Override
+	public String getUserAgent() {
+		return request().getHeader("User-Agent");
 	}
 }

@@ -31,7 +31,7 @@ import static org.nerve.web.security.AuthConfig.*;
  * Created by zengxm on 2017/8/23.
  */
 @ConditionalOnWebApplication
-@ConditionalOnProperty(name ="nerve.security",matchIfMissing = true,havingValue = "true")
+//@ConditionalOnProperty(name ="nerve.security",matchIfMissing = true,havingValue = "true")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -48,7 +48,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.debug("[AUTH] ------------ START SETUP ------------");
-        http.headers().contentTypeOptions().disable();
+
+        http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .disable();
+        http.headers().frameOptions().disable().contentTypeOptions().disable();
+
+        if(!authConfig.enable){
+            http.anonymous();
+            logger.debug("！未开启安全策略，所有请求均不拦截！");
+            printEnd();
+            return;
+        }
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
@@ -85,11 +96,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(new ExitSuccessHandler())
                 .permitAll();
 
-        http.csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .disable();
-        http.headers().frameOptions().disable();
-
         http.exceptionHandling()
                 .authenticationEntryPoint(new LoginRequiredEntryPoint())
                 .accessDeniedHandler(new JsonAccessDeniedHandler());
@@ -118,6 +124,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
         ;
+        printEnd();
+    }
+
+    private void printEnd(){
         logger.debug("[AUTH] ------------ FINISH SETUP ------------");
     }
 

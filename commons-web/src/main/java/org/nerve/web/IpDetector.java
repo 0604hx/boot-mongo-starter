@@ -5,4 +5,10 @@ package org.nerve.web;
  */
 public interface IpDetector {
 	String getIp();
+
+	/**
+	 * 返回当前请求的 UA
+	 * @return
+	 */
+	String getUserAgent();
 }

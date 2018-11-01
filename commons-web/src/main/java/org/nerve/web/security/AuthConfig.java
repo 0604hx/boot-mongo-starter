@@ -14,6 +14,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "nerve.security")
 public class AuthConfig {
 	final static String SPLIT = ",";
+
+	boolean enable = true;
 	/**
 	 * rememberMe 的有效时间，单位为秒
 	 */
@@ -48,6 +50,14 @@ public class AuthConfig {
 	String cookie = "nerve-boot-starter";
 
 	CaptchaConfig captcha = new CaptchaConfig();
+
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
 
 	public int getExpire() {
 		return expire;
