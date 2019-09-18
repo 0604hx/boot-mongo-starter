@@ -1,6 +1,6 @@
 package org.nerve.service;
 
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.nerve.domain.ID;
 import org.nerve.enums.Fields;
 import org.nerve.repo.Pagination;
@@ -75,14 +75,14 @@ public interface CommonService<T extends ID, R extends CrudRepository<T,String>>
 	 * @param id
 	 * @param update
 	 */
-	WriteResult runUpdate(String id, Update update);
+	UpdateResult runUpdate(String id, Update update);
 
 	/**
 	 *
 	 * @param criteria
 	 * @param update
 	 */
-	WriteResult runUpdate(Criteria criteria, Update update);
+	UpdateResult runUpdate(Criteria criteria, Update update);
 
 	/**
 	 * 遍历数据表

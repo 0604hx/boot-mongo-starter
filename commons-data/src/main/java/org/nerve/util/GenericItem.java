@@ -1,7 +1,5 @@
 package org.nerve.util;
 
-import org.springframework.boot.lang.UsesUnsafeJava;
-
 import java.lang.reflect.ParameterizedType;
 
 /**

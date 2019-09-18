@@ -1,6 +1,6 @@
 package org.nerve.service;
 
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.nerve.auth.AuthenticProvider;
 import org.nerve.domain.DateEntity;
 import org.nerve.domain.ID;
@@ -24,8 +24,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.Assert;
-import reactor.bus.Event;
-import reactor.bus.EventBus;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -45,9 +43,6 @@ public class CommonServiceImpl<T extends ID, R extends CommonRepo<T,String>> ext
 
 	@Autowired(required = false)
 	protected AuthenticProvider authProvider;
-
-	@Autowired
-	protected EventBus eventBus;
 
 	@Override
 	public T get(String id) {
@@ -153,7 +148,7 @@ public class CommonServiceImpl<T extends ID, R extends CommonRepo<T,String>> ext
 			throw new ServiceException(Exceptions.INVALID_ENTITY);
 
 		if(t.using()){
-			T oldEntity = repo.findOne(t.id());
+			T oldEntity = get(t.id());
 			try {
 				//默认 id，addDate 不需要复制
 				List<String> fields = new ArrayList<>();
@@ -238,12 +233,12 @@ public class CommonServiceImpl<T extends ID, R extends CommonRepo<T,String>> ext
     }
 
     @Override
-    public WriteResult runUpdate(String id, Update update) {
+    public UpdateResult runUpdate(String id, Update update) {
         return runUpdate(Criteria.where(Fields.ID.value()).is(id), update);
     }
 
     @Override
-    public WriteResult runUpdate(Criteria criteria, Update update) {
+    public UpdateResult runUpdate(Criteria criteria, Update update) {
         if(repo instanceof CommonRepo)
             return repo.updateFirst(new Query(criteria), update);
 
@@ -272,7 +267,6 @@ public class CommonServiceImpl<T extends ID, R extends CommonRepo<T,String>> ext
 
 	protected void sendEvent(T t, Events events){
 		String eventKey = String.format("%s.%s", t.getClass().getSimpleName().toUpperCase(), events);
-		eventBus.notify(eventKey, Event.wrap(t));
 
 		log.info("publish event {} on {}#{}", eventKey, t.getClass().getName(), t.id());
 	}

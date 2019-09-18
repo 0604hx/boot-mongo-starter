@@ -2,6 +2,8 @@ package org.nerve.repo;
 
 import com.mongodb.CommandResult;
 import com.mongodb.WriteResult;
+import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -32,6 +34,7 @@ public interface CommonRepo<T,ID extends java.io.Serializable> extends MongoRepo
      */
     T findOne(Criteria criteria);
     T findOne(Query query);
+    T findOne(ID id);
 
     /**
      * 根据Criteria来进行分页查询
@@ -69,9 +72,9 @@ public interface CommonRepo<T,ID extends java.io.Serializable> extends MongoRepo
 
     Long count(Query query);
 
-    WriteResult updateFirst(Query query, Update update);
+    UpdateResult updateFirst(Query query, Update update);
 
-    WriteResult update(Query query, Update update);
+    UpdateResult update(Query query, Update update);
 
     /**
      * 对某个字段进行分组统计
@@ -98,7 +101,7 @@ public interface CommonRepo<T,ID extends java.io.Serializable> extends MongoRepo
      */
     String getCollectionName();
 
-    CommandResult execCommand(String json);
+    Document execCommand(String json);
 
     /**
      * 获取表的状态信息：execCommand("{collstats:'colName'})
@@ -112,5 +115,5 @@ public interface CommonRepo<T,ID extends java.io.Serializable> extends MongoRepo
      "storageSize" : NumberLong(2417422336),
      }
      */
-    CommandResult getCollectionStats();
+    Document getCollectionStats();
 }

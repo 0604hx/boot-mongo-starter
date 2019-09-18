@@ -32,7 +32,7 @@ nerve:
     remember-me: false
     captcha:
       enable: true
-    popular: /date,/login
+    popular: /date,/login,/account/**
   fastJson: true
   jwt:
     name: ${spring.application.name}

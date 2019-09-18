@@ -1,8 +1,9 @@
 package org.nerve.repo;
 
 
-import com.mongodb.CommandResult;
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +66,10 @@ public class CommonRepoImpl<T,ID extends java.io.Serializable> extends SimpleMon
         return mongoTemplate.findOne(query,entityInformation.getJavaType());
     }
 
+    @Override
+    public T findOne(ID id) {
+        return findById(id).orElse(null);
+    }
 
     @Override
     public List<T> find(Query query, Pagination p) {
@@ -86,8 +91,8 @@ public class CommonRepoImpl<T,ID extends java.io.Serializable> extends SimpleMon
 
     @Override
     public Long delete(Criteria criteria) {
-        WriteResult result = mongoTemplate.remove(new Query(criteria), entityInformation.getJavaType());
-        return Long.parseLong(String.valueOf(result.getN()));
+        DeleteResult result = mongoTemplate.remove(new Query(criteria), entityInformation.getJavaType());
+        return result.getDeletedCount();
     }
 
     @Override
@@ -101,12 +106,12 @@ public class CommonRepoImpl<T,ID extends java.io.Serializable> extends SimpleMon
     }
 
     @Override
-    public WriteResult updateFirst(Query query, Update update) {
+    public UpdateResult updateFirst(Query query, Update update) {
         return mongoTemplate.updateFirst(query, update, entityInformation.getJavaType());
     }
 
     @Override
-    public WriteResult update(Query query, Update update) {
+    public UpdateResult update(Query query, Update update) {
         return mongoTemplate.updateMulti(query, update, entityInformation.getJavaType());
     }
 
@@ -159,12 +164,12 @@ public class CommonRepoImpl<T,ID extends java.io.Serializable> extends SimpleMon
     }
 
     @Override
-    public CommandResult execCommand(String json) {
+    public Document execCommand(String json) {
         return mongoTemplate.executeCommand(json);
     }
 
     @Override
-    public CommandResult getCollectionStats() {
+    public Document getCollectionStats() {
         return execCommand("{collstats:'"+getCollectionName()+"'}");
     }
 }
